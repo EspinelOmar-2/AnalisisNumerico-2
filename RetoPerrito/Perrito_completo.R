@@ -10,7 +10,9 @@ InterpolBarLagr<-function(Ini, Fin){
   X <- seq(x[Ini], x[Fin], length=90)
   Interpol <- barylag(x[Ini:Fin], y[Ini:Fin], X)
   lines(X, Interpol, col="black",from =0,to =35)
+  indiceJ(X,x, Ini,Fin)
 }
+
 
 #Funcion Jaccard recibe los vectores del mismo tamaño con los puntos en los mismos valores de X y de 
 #acuerdo a ello loso divide y redondea si el aprecido o al division es 1 lo toma como un acierto si no como falla y muestra al final
@@ -37,7 +39,7 @@ y=c(3,  3.7 ,3.9 ,
     7   ,5.6  ,
     #Cabeza pt1 6-7
     5.95 ,4.6,
-   # 5.82,4.6,
+    # 5.82,4.6,
     #cabeza pt2 8-9
     
     3, 3,
@@ -65,7 +67,7 @@ x=c(1,  2   ,5   ,
     #cuerpo 4-5
     20 ,24.5 ,
     #cabeza pt1 6-7
-   #Descomentar y comentar los otros puntos para probar como deforma el perro
+    #Descomentar y comentar los otros puntos para probar como deforma el perro
     #  24.7  ,28,
     26.5  ,28,
     #cabeza pt2 8-9
@@ -204,7 +206,6 @@ curve(lagr2,add=T,col="green",from =0,to =35)
 lagr3<- lagrange.poly(x[7:9],y[7:9])
 lagr3
 lagr3<- function(x) -198.1 + 15.8392857142857*x - 0.307142857142857*x^2
-curve(lagr3,add=T,col="green",from =0,to =35)
 
 x= c(6,7.5, 8.1, 13,23.5,  25,27.5,29 ,30)
 y= c(5,5.7,6.69,6.7, 6.1,5.87, 4.1,4.1, 3)
@@ -228,3 +229,41 @@ y=c(5.87,5.15, 4.1, 4.3,4.1, 3)
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 time.taken
+
+y=c(3,3.7,3.9,4.5,5.7,6.69,7.12,6.7,4.45,7,6.1,5.6,5.87,5.15,4.1,4.3,4.1,3)                                                                                                       
+x=c(1,2,5,6,7.5,8.1,10,13,17.6,20,23.5,24.5,25,26.5,27.5,28,29,30)     
+
+longitud <- length(x)
+longitud
+aciertos <- 0
+for (i in x) 
+{
+  cat(x[i])
+  if((lagr(x[i])<= y[i]+0.5)&&(lagr(x[i])>= y[i]-0.5))
+  {
+    aciertos <- aciertos + 1
+  }
+}
+for (i in x) 
+{
+  if((lagr1(x[i])<= y[i]+0.5)&&(lagr1(x[i])>= y[i]-0.5))
+  {
+    aciertos <- aciertos + 1
+  }
+}
+for (i in x) 
+{
+  if((lagr2(x[i])<= y[i]+0.5)&&(lagr2(x[i])>= y[i]-0.5))
+  {
+    aciertos <- aciertos + 1
+  }
+}
+for (i in x) 
+{
+  if((lagr3(x[i])<= y[i]+0.5)&&(lagr3(x[i])>= y[i]-0.5))
+  {
+    aciertos <- aciertos + 1
+  }
+}
+
+cat("indice de Jaccard: ", aciertos/longitud, "aciertos:", aciertos  )
